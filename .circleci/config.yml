@@ -1,0 +1,38 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:16
+
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - run:
+          name: Build React App Static Files
+          command: yarn build
+
+  deploy:
+    machine:
+      image: ubuntu
+    steps:
+      - run:
+          name: Deploy to webservers
+          command: ssh ubuntu@linestar.tech "sudo chef-client -o recipe[linestar.tech::react]"
+
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+
+
