@@ -61,7 +61,7 @@ function SidenavCard() {
           </SoftBox>
           <SoftButton
             component={Link}
-            href="https://www.creative-tim.com/learning-lab/material-ui-marketplace/quick-start/soft-ui-dashboard/"
+            href="https://linestar.tech/api"
             target="_blank"
             rel="noreferrer"
             size="small"

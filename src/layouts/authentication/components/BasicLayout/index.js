@@ -95,8 +95,8 @@ function BasicLayout({ title, description, image, children }) {
 
 // Setting default values for the props of BasicLayout
 BasicLayout.defaultProps = {
-  title: "",
-  description: "",
+  title: "Linestar Labs",
+  description: "Linestar Industrial Automation Technologies",
 };
 
 // Typechecking props for the BasicLayout

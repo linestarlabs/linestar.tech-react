@@ -27,7 +27,7 @@ import PropTypes from "prop-types";
 const SoftUI = createContext(null);
 
 // Setting custom name for the context which is visible on react dev tools
-SoftUI.displayName = "SoftUIContext";
+SoftUI.displayName = "Linestar Labs";
 
 // Soft UI Dashboard PRO React reducer
 function reducer(state, action) {
@@ -72,7 +72,7 @@ function SoftUIControllerProvider({ children }) {
     fixedNavbar: true,
     openConfigurator: false,
     direction: "ltr",
-    layout: "dashboard",
+    layout: "vr",
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);

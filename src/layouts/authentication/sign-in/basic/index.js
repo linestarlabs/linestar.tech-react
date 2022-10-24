@@ -44,7 +44,7 @@ function Basic() {
   return (
     <BasicLayout
       title="Welcome!"
-      description="Use these awesome forms to login or create new account in your project for free."
+      description="Sign in to access your Linestar system dashboards and data streams."
       image={curved9}
     >
       <Card>

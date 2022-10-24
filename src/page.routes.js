@@ -404,7 +404,7 @@ const pageRoutes = [
     ],
   },
   {
-    name: "Docs",
+    name: "Template Docs",
     key: "docs",
     collapse: [
       {

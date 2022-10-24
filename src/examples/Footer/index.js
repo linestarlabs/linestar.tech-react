@@ -60,19 +60,13 @@ function Footer({ company, links }) {
         fontSize={size.sm}
         px={1.5}
       >
-        &copy; {new Date().getFullYear()}, made with
+        &copy; {new Date().getFullYear()}, Linestar, LLC
         <SoftBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
           <Icon color="inherit" fontSize="inherit">
-            favorite
+            star
           </Icon>
         </SoftBox>
-        by
-        <Link href={href} target="_blank">
-          <SoftTypography variant="button" fontWeight="medium">
-            &nbsp;{name}&nbsp;
-          </SoftTypography>
-        </Link>
-        for a better web.
+        Austin, Texas
       </SoftBox>
       <SoftBox
         component="ul"
@@ -99,12 +93,12 @@ function Footer({ company, links }) {
 
 // Setting default values for the props of Footer
 Footer.defaultProps = {
-  company: { href: "/", name: "Creative Tim" },
+  company: { href: "/", name: "Linestar, LLC" },
   links: [
-    { href: "/", name: "Creative Tim" },
-    { href: "/", name: "About Us" },
-    { href: "/", name: "Blog" },
-    { href: "/", name: "License" },
+    { href: "https://linestarautomation.com", name: "Linestar, LLC" },
+    { href: "https://linestarautomation.com", name: "About Us" },
+    { href: "https://github.com/linestarlabs", name: "Github" },
+    { href: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode", name: "License" },
   ],
 };
 
