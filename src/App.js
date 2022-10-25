@@ -141,7 +141,7 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand={brand}
-              brandName="Soft UI Dashboard PRO"
+              brandName="LINESTAR"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
@@ -153,7 +153,7 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboards/default" />} />
+          <Route path="*" element={<Navigate to="/dashboards/power-grid" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -165,7 +165,7 @@ export default function App() {
           <Sidenav
             color={sidenavColor}
             brand={brand}
-            brandName="Linestar Labs"
+            brandName="LINESTAR"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
@@ -177,7 +177,7 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboards/default" />} />
+        <Route path="*" element={<Navigate to="/dashboards/power-grid" />} />
       </Routes>
     </ThemeProvider>
   );

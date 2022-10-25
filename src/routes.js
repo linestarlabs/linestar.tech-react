@@ -39,9 +39,6 @@ Coded by www.creative-tim.com
 import Default from "layouts/dashboards/default";
 import Automotive from "layouts/dashboards/automotive";
 import SmartHome from "layouts/dashboards/smart-home";
-import VRDefault from "layouts/dashboards/virtual-reality/vr-default";
-import VRInfo from "layouts/dashboards/virtual-reality/vr-info";
-import CRM from "layouts/dashboards/crm";
 import ProfileOverview from "layouts/pages/profile/profile-overview";
 import Teams from "layouts/pages/profile/teams";
 import AllProjects from "layouts/pages/profile/all-projects";
@@ -94,218 +91,30 @@ import CreditCard from "examples/Icons/CreditCard";
 const routes = [
   {
     type: "collapse",
-    name: "Dashboards",
-    key: "dashboards",
+    name: "POWER GRID",
+    key: "power-grid",
     icon: <Shop size="12px" />,
     collapse: [
       {
-        name: "Default",
-        key: "default",
-        route: "/dashboards/default",
-        component: <Default />,
-      },
-      {
         name: "Automotive",
         key: "automotive",
-        route: "/dashboards/automotive",
+        route: "/power-grid/automotive",
         component: <Automotive />,
       },
       {
-        name: "Smart Home",
-        key: "smart-home",
-        route: "/dashboards/smart-home",
+        name: "Home",
+        key: "home",
+        route: "/power-grid/eco-home",
         component: <SmartHome />,
       },
-      {
-        name: "Virtual Reality",
-        key: "virtual-reality",
-        collapse: [
-          {
-            name: "VR Default",
-            key: "vr-default",
-            route: "/dashboards/virtual-reality/default",
-            component: <VRDefault />,
-          },
-          {
-            name: "VR Info",
-            key: "vr-info",
-            route: "/dashboards/virtual-reality/info",
-            component: <VRInfo />,
-          },
-        ],
-      },
-      { name: "CRM", key: "crm", route: "/dashboards/crm", component: <CRM /> },
     ],
   },
-  { type: "title", title: "Pages", key: "title-pages" },
+ 
   {
     type: "collapse",
-    name: "Pages",
-    key: "pages",
+    name: "Products",
+    key: "products",
     icon: <Office size="12px" />,
-    collapse: [
-      {
-        name: "Profile",
-        key: "profile",
-        collapse: [
-          {
-            name: "Profile Overview",
-            key: "profile-overview",
-            route: "/pages/profile/profile-overview",
-            component: <ProfileOverview />,
-          },
-          {
-            name: "Teams",
-            key: "teams",
-            route: "/pages/profile/teams",
-            component: <Teams />,
-          },
-          {
-            name: "All Projects",
-            key: "all-projects",
-            route: "/pages/profile/all-projects",
-            component: <AllProjects />,
-          },
-        ],
-      },
-      {
-        name: "Users",
-        key: "users",
-        collapse: [
-          {
-            name: "Reports",
-            key: "reports",
-            route: "/pages/users/reports",
-            component: <Reports />,
-          },
-          {
-            name: "New User",
-            key: "new-user",
-            route: "/pages/users/new-user",
-            component: <NewUser />,
-          },
-        ],
-      },
-      {
-        name: "Account",
-        key: "account",
-        collapse: [
-          {
-            name: "Settings",
-            key: "settings",
-            route: "/pages/account/settings",
-            component: <Settings />,
-          },
-          {
-            name: "Billing",
-            key: "billing",
-            route: "/pages/account/billing",
-            component: <Billing />,
-          },
-          {
-            name: "Invoice",
-            key: "invoice",
-            route: "/pages/account/invoice",
-            component: <Invoice />,
-          },
-          {
-            name: "Security",
-            key: "security",
-            route: "/pages/account/security",
-            component: <Security />,
-          },
-        ],
-      },
-      {
-        name: "Projects",
-        key: "projects",
-        collapse: [
-          {
-            name: "General",
-            key: "general",
-            route: "/pages/projects/general",
-            component: <General />,
-          },
-          {
-            name: "Timeline",
-            key: "timeline",
-            route: "/pages/projects/timeline",
-            component: <Timeline />,
-          },
-          {
-            name: "New Project",
-            key: "new-project",
-            route: "/pages/projects/new-project",
-            component: <NewProject />,
-          },
-        ],
-      },
-      {
-        name: "Pricing Page",
-        key: "pricing-page",
-        route: "/pages/pricing-page",
-        component: <PricingPage />,
-      },
-      { name: "RTL", key: "rtl", route: "/pages/rtl", component: <RTL /> },
-      { name: "Widgets", key: "widgets", route: "/pages/widgets", component: <Widgets /> },
-      { name: "Charts", key: "charts", route: "/pages/charts", component: <Charts /> },
-      {
-        name: "Sweet Alerts",
-        key: "sweet-alerts",
-        route: "/pages/sweet-alerts",
-        component: <SweetAlerts />,
-      },
-      {
-        name: "Notfications",
-        key: "notifications",
-        route: "/pages/notifications",
-        component: <Notifications />,
-      },
-    ],
-  },
-  {
-    type: "collapse",
-    name: "Applications",
-    key: "applications",
-    icon: <SettingsIcon size="12px" />,
-    collapse: [
-      {
-        name: "Kanban",
-        key: "kanban",
-        route: "/applications/kanban",
-        component: <Kanban />,
-      },
-      {
-        name: "Wizard",
-        key: "wizard",
-        route: "/applications/wizard",
-        component: <Wizard />,
-      },
-      {
-        name: "Data Tables",
-        key: "data-tables",
-        route: "/applications/data-tables",
-        component: <DataTables />,
-      },
-      {
-        name: "Calendar",
-        key: "calendar",
-        route: "/applications/calendar",
-        component: <Calendar />,
-      },
-      {
-        name: "Analytics",
-        key: "analytics",
-        route: "/applications/analytics",
-        component: <Analytics />,
-      },
-    ],
-  },
-  {
-    type: "collapse",
-    name: "Ecommerce",
-    key: "ecommerce",
-    icon: <Basket size="12px" />,
     collapse: [
       {
         name: "Overview",

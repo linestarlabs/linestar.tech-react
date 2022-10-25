@@ -27,7 +27,7 @@ import PropTypes from "prop-types";
 const SoftUI = createContext(null);
 
 // Setting custom name for the context which is visible on react dev tools
-SoftUI.displayName = "Linestar Labs";
+SoftUI.displayName = "LINESTAR";
 
 // Soft UI Dashboard PRO React reducer
 function reducer(state, action) {

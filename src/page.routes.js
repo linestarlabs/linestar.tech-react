@@ -40,36 +40,20 @@ import SpaceShip from "examples/Icons/SpaceShip";
 
 const pageRoutes = [
   {
-    name: "Dashboards",
-    key: "dashboards",
+    name: "Power Grid",
+    key: "power-grid",
     icon: <Shop size="12px" color="white" />,
     collapse: [
       {
-        name: "Default",
-        key: "default",
-        route: "/dashboards/default",
-      },
-      {
         name: "Automotive",
         key: "automotive",
-        route: "/dashboards/automotive",
+        route: "/power-grid/automotive",
       },
       {
-        name: "Smart Home",
-        key: "smart-home",
-        route: "/dashboards/smart-home",
+        name: "Home",
+        key: "power-grid",
+        route: "/power-grid/home",
       },
-      {
-        name: "VR Default",
-        key: "vr-default",
-        route: "/dashboards/virtual-reality/default",
-      },
-      {
-        name: "VR Info",
-        key: "vr-info",
-        route: "/dashboards/virtual-reality/info",
-      },
-      { name: "CRM", key: "crm", route: "/dashboards/crm" },
     ],
   },
   {
