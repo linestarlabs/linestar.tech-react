@@ -25,7 +25,8 @@ import SoftButton from "components/SoftButton";
 const sofa =
   "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
 
-function ProductImage() {
+function ProductImage(params) {
+  const {product} = params
   return (
     <Card sx={{ height: "100%" }}>
       <SoftBox p={3}>
@@ -34,7 +35,7 @@ function ProductImage() {
         </SoftTypography>
         <SoftBox
           component="img"
-          src={sofa}
+          src={product.image_url}
           alt="Product Image"
           borderRadius="lg"
           shadow="lg"

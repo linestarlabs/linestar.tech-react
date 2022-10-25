@@ -46,165 +46,45 @@ const inStock = (
   <SoftBadge variant="contained" color="success" size="xs" badgeContent="in stock" container />
 );
 
-const dataTableData = {
-  columns: [
-    {
-      Header: "product",
-      accessor: "product",
-      width: "40%",
-      Cell: ({ value: [name, data] }) => (
-        <ProductCell image={data.image} name={name} checked={data.checked} />
-      ),
-    },
-    { Header: "category", accessor: "category" },
-    { Header: "price", accessor: "price" },
-    { Header: "sku", accessor: "sku" },
-    { Header: "quantity", accessor: "quantity" },
-    {
-      Header: "status",
-      accessor: "status",
-      Cell: ({ value }) => (value === "in stock" ? inStock : outOfStock),
-    },
-    { Header: "action", accessor: "action" },
-  ],
+export function buildDataTableData(products) {
 
-  rows: [
-    {
-      product: ["BKLGO Full Zip Hoodie", { image: adidasHoodie, checked: true }],
-      category: "Cloting",
-      price: "$1,321",
-      sku: 243598234,
-      quantity: 0,
-      status: "out of stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["MacBook Pro", { image: macBookPro, checked: true }],
-      category: "Electronics",
-      price: "$1,869",
-      sku: 877712,
-      quantity: 0,
-      status: "out of stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Metro Bar Stool", { image: metroChair, checked: false }],
-      category: "Furniture",
-      price: "$99",
-      sku: "0134729",
-      quantity: 978,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Alchimia Chair", { image: alchimiaChair, checked: false }],
-      category: "Furniture",
-      price: "$2,999",
-      sku: 113213,
-      quantity: 0,
-      status: "out of stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Fendi Gradient Coat", { image: fendiCoat, checked: false }],
-      category: "Clothing",
-      price: "$869",
-      sku: 634729,
-      quantity: 725,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Off White Cotton Bomber", { image: offWhiteJacket, checked: false }],
-      category: "Clothing",
-      price: "$1,869",
-      sku: 634729,
-      quantity: 725,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Y-3 Yohji Yamamoto", { image: yohjiYamamoto, checked: true }],
-      category: "Shoes",
-      price: "$869",
-      sku: 634729,
-      quantity: 725,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Alexander McQueen", { image: mcqueenShirt, checked: true }],
-      category: "Clothing",
-      price: "$1,199",
-      sku: "00121399",
-      quantity: 51293,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Luin Floor Lamp", { image: yellowChair, checked: true }],
-      category: "Furniture",
-      price: "$1,900",
-      sku: 434729,
-      quantity: 34,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Heron Preston T-shirt", { image: heronTshirt, checked: false }],
-      category: "Clothing",
-      price: "$149",
-      sku: 928341,
-      quantity: 0,
-      status: "out of stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Gray Living Chair", { image: livingChair, checked: true }],
-      category: "Furniture",
-      price: "$2,099",
-      sku: 9912834,
-      quantity: 32,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Derbyshire Orange Sofa", { image: orangeSofa, checked: false }],
-      category: "Furniture",
-      price: "$2,999",
-      sku: 561151,
-      quantity: 22,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Burberry Low-Tops", { image: burberry, checked: true }],
-      category: "Shoes",
-      price: "$869",
-      sku: 634729,
-      quantity: 725,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Dolce & Gabbana Skirt", { image: dgSkirt, checked: false }],
-      category: "Designer",
-      price: "$999",
-      sku: "01827391",
-      quantity: 0,
-      status: "out of stock",
-      action: <ActionCell />,
-    },
-    {
-      product: ["Undercover T-shirt", { image: undercover, checked: true }],
-      category: "Shoes",
-      price: "$869",
-      sku: 63472,
-      quantity: 725,
-      status: "in stock",
-      action: <ActionCell />,
-    },
-  ],
-};
+  console.log('BUILD', products)
 
-export default dataTableData;
+  const dataTableData = {
+    columns: [
+      {
+        Header: "product",
+        accessor: "product",
+        width: "40%",
+        Cell: ({ value: [name, data] }) => (
+          <ProductCell image={data.image} name={name} checked={data.checked} />
+        ),
+      },
+      { Header: "category", accessor: "category" },
+      { Header: "price", accessor: "price" },
+      { Header: "sku", accessor: "sku" },
+      { Header: "quantity", accessor: "quantity" },
+      {
+        Header: "status",
+        accessor: "status",
+        Cell: ({ value }) => (value === "IN STOCK" ? inStock : outOfStock),
+      },
+      { Header: "action", accessor: "action" },
+    ],
+  
+    rows: products.map(product => {
+      return {
+        product: [product.name, { image: product.image_url, checked: true }],
+        category: product.category,
+        price: `$${product.price}`,
+        sku: product.sku,
+        quantity: product.quantity,
+        status: product.status,
+        action: <ActionCell product={product}/>,
+      }
+    })
+  };
+
+  return dataTableData
+  
+}

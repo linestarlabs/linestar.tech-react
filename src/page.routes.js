@@ -40,7 +40,7 @@ import SpaceShip from "examples/Icons/SpaceShip";
 
 const pageRoutes = [
   {
-    name: "Power Grid",
+    name: "POWER GRID",
     key: "power-grid",
     icon: <Shop size="12px" color="white" />,
     collapse: [
@@ -214,43 +214,13 @@ const pageRoutes = [
         route: "/ecommerce/products/new-product",
       },
       {
-        name: "Edit Product",
-        key: "edit-product",
-        route: "/ecommerce/products/edit-product",
-      },
-      {
-        name: "Product Page",
-        key: "product-page",
-        route: "/ecommerce/products/product-page",
-      },
-      {
         name: "Products List",
         key: "products-list",
         route: "/ecommerce/products/products-list",
       },
     ],
   },
-  {
-    name: "Sign In",
-    key: "sign-in",
-    collapse: [
-      {
-        name: "Basic",
-        key: "basic",
-        route: "/authentication/sign-in/basic",
-      },
-      {
-        name: "Cover",
-        key: "cover",
-        route: "/authentication/sign-in/cover",
-      },
-      {
-        name: "Illustration",
-        key: "illustration",
-        route: "/authentication/sign-in/illustration",
-      },
-    ],
-  },
+
   {
     name: "Sign Up",
     key: "sign-up",

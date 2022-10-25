@@ -21,20 +21,30 @@ import Tooltip from "@mui/material/Tooltip";
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
-function ActionCell() {
+import { Link } from 'react-router-dom'
+
+function ActionCell(params) {
+
+  const { product } = params
+
+  console.log('PRODUCT', product)
   return (
     <SoftBox display="flex" alignItems="center">
-      <SoftTypography variant="body1" color="secondary" sx={{ cursor: "pointer", lineHeight: 0 }}>
-        <Tooltip title="Preview product" placement="top">
-          <Icon>visibility</Icon>
-        </Tooltip>
-      </SoftTypography>
-      <SoftBox mx={2}>
+      <Link to={`/products/${product.sku}`}>
         <SoftTypography variant="body1" color="secondary" sx={{ cursor: "pointer", lineHeight: 0 }}>
-          <Tooltip title="Edit product" placement="top">
-            <Icon>edit</Icon>
+          <Tooltip title="Preview product" placement="top">
+            <Icon>visibility</Icon>
           </Tooltip>
         </SoftTypography>
+      </Link>
+      <SoftBox mx={2}>
+        <Link to={`/products/${product.sku}/edit`}>
+          <SoftTypography variant="body1" color="secondary" sx={{ cursor: "pointer", lineHeight: 0 }}>
+            <Tooltip title="Edit product" placement="top">
+              <Icon>edit</Icon>
+            </Tooltip>
+          </SoftTypography>
+        </Link>
       </SoftBox>
       <SoftTypography variant="body1" color="secondary" sx={{ cursor: "pointer", lineHeight: 0 }}>
         <Tooltip title="Delete product" placement="left">

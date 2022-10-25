@@ -28,7 +28,8 @@ import SoftSelect from "components/SoftSelect";
 // NewProduct page components
 import FormField from "layouts/ecommerce/products/edit-product/components/FormField";
 
-function ProductInfo() {
+function ProductInfo(params) {
+  const {product} = params
   const [editorValue, setEditorValue] = useState(
     `<p>
       Long sleeves black denim jacket with a twisted design. Contrast stitching. Button up closure. White arrow prints on the back.
@@ -42,7 +43,7 @@ function ProductInfo() {
         <SoftBox mt={1}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
-              <FormField type="text" label="name" defaultValue="Minimal Bar Stool" />
+              <FormField type="text" label="name" defaultValue={product.name} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormField type="number" label="weight" defaultValue={2} />
@@ -55,10 +56,10 @@ function ProductInfo() {
               <FormField type="text" label="collection" defaultValue="Summer" />
             </Grid>
             <Grid item xs={12} sm={3}>
-              <FormField type="text" label="price" defaultValue="$90" />
+              <FormField type="text" label="price" defaultValue={`$${product.price}`} />
             </Grid>
             <Grid item xs={12} sm={3}>
-              <FormField type="number" label="quantity" defaultValue={50} />
+              <FormField type="number" label="quantity" defaultValue={product.quantity} />
             </Grid>
           </Grid>
         </SoftBox>

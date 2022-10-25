@@ -31,13 +31,27 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
+import useSWR from 'swr'
+
 // Data
-import dataTableData from "layouts/ecommerce/products/products-list/data/dataTableData";
+import {buildDataTableData} from "layouts/ecommerce/products/products-list/data/dataTableData";
+
+const fetcher = (path) => fetch(`https://linestar.tech${path}`).then(res => res.json())
 
 function ProductsList() {
+
+  const { data, error, loading } = useSWR('/api/v1/products', fetcher)
+
+  if (!data || loading) {
+    return <></>
+  }
+
+  const dataTableData = buildDataTableData(data?.products)
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      {data && (
       <SoftBox my={3}>
         <Card>
           <SoftBox display="flex" justifyContent="space-between" alignItems="flex-start" p={3}>
@@ -73,6 +87,7 @@ function ProductsList() {
           />
         </Card>
       </SoftBox>
+      )}
       <Footer />
     </DashboardLayout>
   );

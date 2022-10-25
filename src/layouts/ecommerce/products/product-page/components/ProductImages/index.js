@@ -25,13 +25,15 @@ import Grid from "@mui/material/Grid";
 import SoftBox from "components/SoftBox";
 
 // Images
-import image1 from "assets/images/ecommerce/wooden-table.jpeg";
 import image2 from "assets/images/ecommerce/chair-pink.jpeg";
 import image3 from "assets/images/ecommerce/black-chair.jpeg";
 import image4 from "assets/images/ecommerce/chair-steel.jpeg";
 import image5 from "assets/images/ecommerce/chair-wood.jpeg";
 
-function ProductImages() {
+function ProductImages(params) {
+  const { product } = params
+  const image1 = product.image_url
+
   const [currentImage, setCurrentImage] = useState(image1);
   const [imgsViewer, setImgsViewer] = useState(false);
   const [imgsViewerCurrent, setImgsViewerCurrent] = useState(0);
@@ -45,6 +47,7 @@ function ProductImages() {
   const closeImgsViewer = () => setImgsViewer(false);
   const imgsViewerNext = () => setImgsViewerCurrent(imgsViewerCurrent + 1);
   const imgsViewerPrev = () => setImgsViewerCurrent(imgsViewerCurrent - 1);
+
 
   return (
     <SoftBox>

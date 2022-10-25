@@ -153,7 +153,7 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/power-grid/smart-home" />} />
+          <Route path="*" element={<Navigate to="/power-grid/eco-home" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -177,7 +177,7 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/power-grid/smart-home" />} />
+        <Route path="*" element={<Navigate to="/power-grid/eco-home" />} />
       </Routes>
     </ThemeProvider>
   );

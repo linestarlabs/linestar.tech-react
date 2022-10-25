@@ -25,7 +25,8 @@ import SoftBadge from "components/SoftBadge";
 import SoftSelect from "components/SoftSelect";
 import SoftInput from "components/SoftInput";
 
-function ProductInfo() {
+function ProductInfo(params) {
+  const {product} = params
   const frameOptions = [
     { value: "aluminium", label: "Aluminium" },
     { value: "carbon", label: "Carbon" },
@@ -46,7 +47,7 @@ function ProductInfo() {
     <SoftBox>
       <SoftBox mb={1}>
         <SoftTypography variant="h3" fontWeight="bold">
-          Minimal Bar Stool
+          {product.name}
         </SoftTypography>
       </SoftBox>
       <SoftTypography variant="h4" color="text">
@@ -63,7 +64,7 @@ function ProductInfo() {
       </SoftBox>
       <SoftBox mb={1}>
         <SoftTypography variant="h5" fontWeight="medium">
-          $1,419
+          ${product.price}
         </SoftTypography>
       </SoftBox>
       <SoftBadge variant="contained" color="success" badgeContent="in stock" container />

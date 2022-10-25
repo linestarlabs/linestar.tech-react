@@ -32,7 +32,26 @@ import ProductInfo from "layouts/ecommerce/products/edit-product/components/Prod
 import Socials from "layouts/ecommerce/products/edit-product/components/Socials";
 import Pricing from "layouts/ecommerce/products/edit-product/components/Pricing";
 
+import { useParams } from 'react-router-dom'
+
+import useSWR from 'swr'
+
+const fetcher = (path) => fetch(`https://linestar.tech${path}`).then(res => res.json())
+
 function EditProduct() {
+
+  const { sku } = useParams();
+
+  const { data, error, loading } = useSWR(`/api/v1/products/${sku}`, fetcher)
+
+  console.log({ data, error, loading })
+
+  if (!data || loading) {
+    return <></>
+  }
+
+  const { product } = data
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -61,10 +80,10 @@ function EditProduct() {
         </SoftBox>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={4}>
-            <ProductImage />
+            <ProductImage product={product}/>
           </Grid>
           <Grid item xs={12} lg={8}>
-            <ProductInfo />
+            <ProductInfo product={product}/>
           </Grid>
           <Grid item xs={12} lg={4}>
             <Socials />

@@ -34,10 +34,32 @@ import ProductInfo from "layouts/ecommerce/products/product-page/components/Prod
 // Data
 import dataTableData from "layouts/ecommerce/products/product-page/data/dataTableData";
 
+import { useParams } from 'react-router-dom'
+
+import useSWR from 'swr'
+
+const fetcher = (path) => fetch(`https://linestar.tech${path}`).then(res => res.json())
+
 function ProductPage() {
+
+  const { sku } = useParams();
+
+  const { data, error, loading } = useSWR(`/api/v1/products/${sku}`, fetcher)
+
+  console.log({ data, error, loading })
+
+  if (!data || loading) {
+    return <></>
+  }
+
+  const { product } = data
+
+  console.log('SKU', sku)
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      {product && (
       <SoftBox py={3}>
         <Card sx={{ overflow: "visible" }}>
           <SoftBox p={3}>
@@ -49,10 +71,10 @@ function ProductPage() {
 
             <Grid container spacing={3}>
               <Grid item xs={12} lg={6} xl={5}>
-                <ProductImages />
+                <ProductImages product={product}/>
               </Grid>
               <Grid item xs={12} lg={5} sx={{ mx: "auto" }}>
-                <ProductInfo />
+                <ProductInfo product={product}/>
               </Grid>
             </Grid>
 
@@ -72,6 +94,7 @@ function ProductPage() {
           </SoftBox>
         </Card>
       </SoftBox>
+      )}
       <Footer />
     </DashboardLayout>
   );

@@ -115,125 +115,37 @@ const routes = [
     name: "Products",
     key: "products",
     icon: <Office size="12px" />,
+
     collapse: [
       {
-        name: "Overview",
-        key: "overview",
-        route: "/ecommerce/overview",
-        component: <Overview />,
+        name: "New Product",
+        key: "new-product",
+        route: "/products/new-product",
+        component: <NewProduct />,
       },
       {
-        name: "Products",
-        key: "products",
-        collapse: [
-          {
-            name: "New Product",
-            key: "new-product",
-            route: "/ecommerce/products/new-product",
-            component: <NewProduct />,
-          },
-          {
-            name: "Edit Product",
-            key: "edit-product",
-            route: "/ecommerce/products/edit-product",
-            component: <EditProduct />,
-          },
-          {
-            name: "Product Page",
-            key: "product-page",
-            route: "/ecommerce/products/product-page",
-            component: <ProductPage />,
-          },
-          {
-            name: "Products List",
-            key: "products-list",
-            route: "/ecommerce/products/products-list",
-            component: <ProductsList />,
-          },
-        ],
+        name: "Edit Product",
+        key: "edit-product",
+        route: "/products/:sku/edit",
+        hidden: true,
+        component: <EditProduct />,
       },
       {
-        name: "Orders",
-        key: "orders",
-        collapse: [
-          {
-            name: "Order List",
-            key: "order-list",
-            route: "/ecommerce/orders/order-list",
-            component: <OrderList />,
-          },
-          {
-            name: "Order Details",
-            key: "order-details",
-            route: "/ecommerce/orders/order-details",
-            component: <OrderDetails />,
-          },
-        ],
+        name: "Product Page",
+        key: "product-page",
+        route: "/products/:sku",
+        hidden: true,
+        component: <ProductPage />,
       },
       {
-        name: "Referral",
-        key: "referral",
-        route: "/ecommerce/referral",
-        component: <Referral />,
+        name: "Products List",
+        key: "products-list",
+        route: "/products/products-list",
+        component: <ProductsList />,
       },
     ],
   },
-  {
-    type: "collapse",
-    name: "Authentication",
-    key: "authentication",
-    icon: <Document size="12px" />,
-    collapse: [
-      {
-        name: "Sign In",
-        key: "sign-in",
-        route: "/authentication/sign-in/basic",
-        component: <SignInBasic />
-      },
-      {
-        name: "Sign Up",
-        key: "sign-up",
-        route: "/authentication/sign-up/basic",
-        component: <SignUpBasic />
-      },
-      {
-        name: "Reset Password",
-        key: "reset-password",
-        route: "/authentication/reset-password/basic",
-        component: <ResetBasic />
-      },
-      {
-        name: "Lock",
-        key: "lock",
-        route: "/authentication/lock/basic",
-        component: <LockBasic />
-      },
-      {
-        name: "2-Step Verification",
-        key: "2-step-verification",
-        route: "/authentication/verification/basic",
-        component: <VerificationBasic />
-      },
-      {
-        name: "Error",
-        key: "error",
-        collapse: [
-          {
-            name: "Error 404",
-            key: "error-404",
-            route: "/authentication/error/404",
-            component: <Error404 />,
-          },
-          {
-            name: "Error 500",
-            key: "error-500",
-            route: "/authentication/error/500",
-            component: <Error500 />,
-          },
-        ],
-      },
-    ],
-  },
+ 
   { type: "divider", key: "divider-1" },
   { type: "title", title: "Docs", key: "title-docs" },
   {
