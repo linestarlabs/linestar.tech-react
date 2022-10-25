@@ -59,6 +59,58 @@ import {
 import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 
+const relayxSignIn = async () => {
+  const token = await relayone.authBeta();
+
+  const json = JSON.parse(atob(token.split('.')[0]));
+  localStorage.setItem('auth.type', 'relayx');
+  localStorage.setItem('relayx.token', token);
+  localStorage.setItem('relayx.auth', JSON.stringify(json));
+  localStorage.setItem('relayx.paymail', json.paymail);
+  localStorage.setItem('relayx.pubkey', json.pubkey);
+  localStorage.setItem('relayx.origin', json.origin);
+  localStorage.setItem('relayx.issued_at', json.issued_at);
+
+  const user = {
+    id: json.pubkey,
+    email: json.paymail,
+    name: json.paymail
+  };
+  const dispatch = {
+    type: 'LOGIN',
+    payload: {
+      wallet: 'relayx',
+      isLoggedIn: true,
+      user
+    }
+  };
+
+  return {json, user, dispatch};
+};
+
+function logout() {
+
+  window.localStorage.removeItem('relayx.auth');
+  window.localStorage.removeItem('relayx.origin');
+  window.localStorage.removeItem('relayx.token');
+  window.localStorage.removeItem('relayx.pubkey');
+  window.localStorage.removeItem('relayx.paymail');
+  window.localStorage.removeItem('relayx.domain');
+  window.localStorage.removeItem('relayx.issued_at');
+}
+
+async function signIn(e) {
+
+  e.preventDefault();
+
+  e.stopPropagation();
+
+  const { user } = await relayxSignIn()
+
+  console.log("relayx.signin.result", { user })
+
+}
+
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
@@ -151,14 +203,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </SoftBox>
         {isMini ? null : (
           <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <SoftBox pr={1}>
-              <SoftInput
-                placeholder="Type here..."
-                icon={{ component: "search", direction: "left" }}
-              />
-            </SoftBox>
+
             <SoftBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
+              <Link to="/authentication/sign-in/basic" onClick={signIn}>
                 <IconButton sx={navbarIconButton} size="small">
                   <Icon
                     sx={({ palette: { dark, white } }) => ({
@@ -194,17 +241,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
               >
                 <Icon>settings</Icon>
               </IconButton>
-              <IconButton
-                size="small"
-                color="inherit"
-                sx={navbarIconButton}
-                aria-controls="notification-menu"
-                aria-haspopup="true"
-                variant="contained"
-                onClick={handleOpenMenu}
-              >
-                <Icon className={light ? "text-white" : "text-dark"}>notifications</Icon>
-              </IconButton>
+
               {renderMenu()}
             </SoftBox>
           </SoftBox>

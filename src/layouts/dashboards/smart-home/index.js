@@ -46,6 +46,35 @@ import controllerCardIcons from "layouts/dashboards/smart-home/data/controllerCa
 // Images
 import iconSunCloud from "assets/images/small-logos/icon-sun-cloud.png";
 
+const relayxSignIn = async () => {
+  const token = await relayone.authBeta();
+
+  const json = JSON.parse(atob(token.split('.')[0]));
+  localStorage.setItem('auth.type', 'relayx');
+  localStorage.setItem('relayx.token', token);
+  localStorage.setItem('relayx.auth', JSON.stringify(json));
+  localStorage.setItem('relayx.paymail', json.paymail);
+  localStorage.setItem('relayx.pubkey', json.pubkey);
+  localStorage.setItem('relayx.origin', json.origin);
+  localStorage.setItem('relayx.issued_at', json.issued_at);
+
+  const user = {
+    id: json.pubkey,
+    email: json.paymail,
+    name: json.paymail
+  };
+  const dispatch = {
+    type: 'LOGIN',
+    payload: {
+      wallet: 'relayx',
+      isLoggedIn: true,
+      user
+    }
+  };
+
+  return {json, user, dispatch};
+};
+
 function SmartHome() {
   const [temperature, setTemperature] = useState(21);
   const {
@@ -66,6 +95,8 @@ function SmartHome() {
   const [airConditionerState, setAirConditionerState] = useState(false);
   const [lightsStata, setLightsStata] = useState(false);
   const [wifiState, setWifiState] = useState(true);
+
+  window['relayxSignIn'] = relayxSignIn;
 
   return (
     <DashboardLayout>
