@@ -112,7 +112,7 @@ function SmartHome() {
                 <Grid item xs={12}>
                   <WeatherCard
                     title="weather today"
-                    weather={{ location: "San Francisco", degree: 29 }}
+                    weather={{ location: "Austin", degree: 29 }}
                     icon={{ component: iconSunCloud, text: "cloudy" }}
                   />
                 </Grid>
@@ -120,7 +120,7 @@ function SmartHome() {
                   <DefaultCounterCard
                     count={21}
                     suffix={<>&deg;C</>}
-                    title="living room"
+                    title="Power Server"
                     description="temperature"
                   />
                 </Grid>
@@ -135,17 +135,17 @@ function SmartHome() {
                 <Grid item xs={12} md={6}>
                   <DefaultCounterCard
                     count={87}
-                    suffix="m³"
-                    title="water"
+                    suffix="kW"
+                    title="energy"
                     description="consumption"
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <DefaultCounterCard
                     count={417}
-                    suffix="GB"
-                    title="internet"
-                    description="all devices"
+                    suffix="kW"
+                    title="energy"
+                    description="production"
                   />
                 </Grid>
               </Grid>

@@ -35,9 +35,13 @@ import breakpoints from "assets/theme/base/breakpoints";
 import CameraView from "layouts/dashboards/smart-home/components/CameraView";
 
 // Images
-import camera1 from "assets/images/bg-smart-home-1.jpg";
-import camera2 from "assets/images/bg-smart-home-2.jpg";
-import camera3 from "assets/images/home-decor-3.jpg";
+//import camera1 from "assets/images/bg-smart-home-1.jpg";
+//import camera2 from "assets/images/bg-smart-home-2.jpg";
+//import camera3 from "assets/images/home-decor-3.jpg";
+
+import camera1 from "assets/images/propane-home-generator.jpeg";
+import camera2 from "assets/images/maison-panneau-solaire-16.jpeg";
+import camera3 from "assets/images/power-wall-sma-inverter.jpeg";
 
 function Cameras() {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
@@ -96,9 +100,9 @@ function Cameras() {
           <SoftBox width="90%">
             <AppBar position="static">
               <Tabs orientation={tabsOrientation} value={camera} onChange={handleSetCamera}>
-                <Tab label="Kitchen" />
-                <Tab label="Living" />
-                <Tab label="Attic" />
+                <Tab label="Propane" />
+                <Tab label="Solar" />
+                <Tab label="Storage" />
               </Tabs>
             </AppBar>
           </SoftBox>
