@@ -23,6 +23,7 @@ import PropTypes from "prop-types";
 
 // @mui core components
 import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -59,57 +60,7 @@ import {
 import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 
-const relayxSignIn = async () => {
-  const token = await relayone.authBeta();
-
-  const json = JSON.parse(atob(token.split('.')[0]));
-  localStorage.setItem('auth.type', 'relayx');
-  localStorage.setItem('relayx.token', token);
-  localStorage.setItem('relayx.auth', JSON.stringify(json));
-  localStorage.setItem('relayx.paymail', json.paymail);
-  localStorage.setItem('relayx.pubkey', json.pubkey);
-  localStorage.setItem('relayx.origin', json.origin);
-  localStorage.setItem('relayx.issued_at', json.issued_at);
-
-  const user = {
-    id: json.pubkey,
-    email: json.paymail,
-    name: json.paymail
-  };
-  const dispatch = {
-    type: 'LOGIN',
-    payload: {
-      wallet: 'relayx',
-      isLoggedIn: true,
-      user
-    }
-  };
-
-  return {json, user, dispatch};
-};
-
-function logout() {
-
-  window.localStorage.removeItem('relayx.auth');
-  window.localStorage.removeItem('relayx.origin');
-  window.localStorage.removeItem('relayx.token');
-  window.localStorage.removeItem('relayx.pubkey');
-  window.localStorage.removeItem('relayx.paymail');
-  window.localStorage.removeItem('relayx.domain');
-  window.localStorage.removeItem('relayx.issued_at');
-}
-
-async function signIn(e) {
-
-  e.preventDefault();
-
-  e.stopPropagation();
-
-  const { user } = await relayxSignIn()
-
-  console.log("relayx.signin.result", { user })
-
-}
+import useAuth from 'hooks/useAuth'
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -117,6 +68,31 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const { user, login, logout, restore } = useAuth()
+
+  async function signIn(e) {
+
+    e.preventDefault();
+  
+    e.stopPropagation();
+  
+    const { user: relayxUser } = await login(relayone)
+  
+    console.log("relayx.signin.result", { relayxUser })
+
+    setUser(relayxUser)
+  
+  }
+
+  function signOut(event) {
+
+    event.preventDefault()
+  
+    event.stopPropagation()
+
+    logout()
+  
+  }
 
   useEffect(() => {
     // Setting the navbar type
@@ -143,6 +119,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
     // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleTransparentNavbar);
   }, [dispatch, fixedNavbar]);
+
+
+  useEffect(() => {
+
+    restore(relayone)
+
+  }, [])
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
@@ -204,22 +187,61 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
 
+            {!user ? (
             <SoftBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic" onClick={signIn}>
+            <Link to="/authentication/sign-in/basic" onClick={signIn}>
+              <IconButton sx={navbarIconButton} size="small">
+                <Icon
+                  sx={({ palette: { dark, white } }) => ({
+                    color: light ? white.main : dark.main,
+                  })}
+                >
+                  account_circle
+                </Icon>
+                <SoftTypography
+                  variant="button"
+                  fontWeight="medium"
+                  color={light ? "white" : "dark"}
+                >
+                  Sign in
+                </SoftTypography>
+              </IconButton>
+            </Link>
+            <IconButton
+              size="small"
+              color="inherit"
+              sx={navbarMobileMenu}
+              onClick={handleMiniSidenav}
+            >
+              <Icon className={light ? "text-white" : "text-dark"}>
+                {miniSidenav ? "menu_open" : "menu"}
+              </Icon>
+            </IconButton>
+
+            {renderMenu()}
+          </SoftBox>
+            ) : (
+              <SoftBox color={light ? "white" : "inherit"}>
+              <Link to="/authentication/sign-in/basic" onClick={signOut}>
                 <IconButton sx={navbarIconButton} size="small">
                   <Icon
                     sx={({ palette: { dark, white } }) => ({
                       color: light ? white.main : dark.main,
                     })}
                   >
-                    account_circle
+                    <Box
+                      component="img"
+                      sx={{ width: '15px', borderRadius: '50%'}}
+                      src={`https://bitpic.network/u/${user.paymail}`}
+                    >
+                    </Box>
                   </Icon>
                   <SoftTypography
                     variant="button"
                     fontWeight="medium"
                     color={light ? "white" : "dark"}
                   >
-                    Sign in
+                    {user.paymail}
                   </SoftTypography>
                 </IconButton>
               </Link>
@@ -244,6 +266,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
               {renderMenu()}
             </SoftBox>
+            )}
+
           </SoftBox>
         )}
       </Toolbar>

@@ -34,6 +34,8 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftButton from "components/SoftButton";
 
+import useAuth from 'hooks/useAuth'
+
 // Custom styles for the Configurator
 import ConfiguratorRoot from "examples/Configurator/ConfiguratorRoot";
 
@@ -53,6 +55,8 @@ function Configurator() {
     controller;
   const [disabled, setDisabled] = useState(false);
   const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
+
+  const { logout } = useAuth()
 
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
@@ -90,6 +94,17 @@ function Configurator() {
     },
   });
 
+  function signOut(event) {
+
+    event.preventDefault()
+    event.stopPropagation()
+
+    logout()
+
+    setOpenConfigurator(dispatch, false)
+
+  }
+
   return (
     <ConfiguratorRoot variant="permanent" ownerState={{ openConfigurator }}>
       <SoftBox
@@ -101,9 +116,9 @@ function Configurator() {
         px={3}
       >
         <SoftBox>
-          <SoftTypography variant="h5">Soft UI Configurator</SoftTypography>
+          <SoftTypography variant="h5">My Linestar Grid Account</SoftTypography>
           <SoftTypography variant="body2" color="text">
-            See our dashboard options.
+            {user && user.paymail}
           </SoftTypography>
         </SoftBox>
 
@@ -228,14 +243,12 @@ function Configurator() {
           </SoftBox>
           <SoftButton
             component={Link}
-            href="https://linestar.tech/api"
-            target="_blank"
-            rel="noreferrer"
             color="dark"
             variant="outlined"
             fullWidth
+            onClick={signOut}
           >
-            view documentation
+            Sign Out
           </SoftButton>
         </SoftBox>
       </SoftBox>

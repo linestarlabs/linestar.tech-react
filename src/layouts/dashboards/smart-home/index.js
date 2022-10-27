@@ -75,6 +75,30 @@ const relayxSignIn = async () => {
   return {json, user, dispatch};
 };
 
+export const relayxSignOut = async () => {
+
+  localStorage.setItem('auth.type', undefined)
+  localStorage.setItem('relayx.token', undefined);
+  localStorage.setItem('relayx.auth', undefined);
+  localStorage.setItem('relayx.paymail', undefined);
+  localStorage.setItem('relayx.pubkey', undefined);
+  localStorage.setItem('relayx.origin', undefined);
+  localStorage.setItem('relayx.issued_at', undefined);
+
+
+  const dispatch = {
+    type: 'LOGOUT',
+    payload: {
+      wallet: 'relayx',
+      isLoggedIn: false,
+    }
+  };
+
+  return {dispatch};
+};
+
+
+
 function SmartHome() {
   const [temperature, setTemperature] = useState(21);
   const {

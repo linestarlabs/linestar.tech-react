@@ -40,15 +40,10 @@ import SpaceShip from "examples/Icons/SpaceShip";
 
 const pageRoutes = [
   {
-    name: "POWER GRID",
-    key: "power-grid",
+    name: "MICRO GRIDS",
+    key: "power-server",
     icon: <Shop size="12px" color="white" />,
     collapse: [
-      {
-        name: "Automotive",
-        key: "automotive",
-        route: "/power-grid/automotive",
-      },
       {
         name: "Home",
         key: "power-grid",

@@ -91,19 +91,14 @@ import CreditCard from "examples/Icons/CreditCard";
 const routes = [
   {
     type: "collapse",
-    name: "POWER GRID",
+    name: "Home Power System",
     key: "power-grid",
     icon: <Shop size="12px" />,
     collapse: [
+
       {
-        name: "Automotive",
-        key: "automotive",
-        route: "/power-grid/automotive",
-        component: <Automotive />,
-      },
-      {
-        name: "Home",
-        key: "home",
+        name: "Home Power System",
+        key: "live stream",
         route: "/power-grid/eco-home",
         component: <SmartHome />,
       },
@@ -112,33 +107,13 @@ const routes = [
  
   {
     type: "collapse",
-    name: "Products",
+    name: "Linestar Products",
     key: "products",
     icon: <Office size="12px" />,
 
     collapse: [
       {
-        name: "New Product",
-        key: "new-product",
-        route: "/products/new-product",
-        component: <NewProduct />,
-      },
-      {
-        name: "Edit Product",
-        key: "edit-product",
-        route: "/products/:sku/edit",
-        hidden: true,
-        component: <EditProduct />,
-      },
-      {
-        name: "Product Page",
-        key: "product-page",
-        route: "/products/:sku",
-        hidden: true,
-        component: <ProductPage />,
-      },
-      {
-        name: "Products List",
+        name: "Linestar Products",
         key: "products-list",
         route: "/products/products-list",
         component: <ProductsList />,
