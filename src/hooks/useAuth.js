@@ -44,20 +44,21 @@ export default function useAuth() {
       
     }
 
-    function restore(relayone) {
+    async function restore(relayone) {
 
         const relayxAuth = localStorage.getItem('relayx.auth')
 
-        window.AUTH = relayxAuth
-
-        console.log('RESTORE', relayxAuth)
-
         if (localStorage.getItem('relayx.auth')) {
-
-            console.log('yes restore')
 
             login(relayone)
 
+        }
+
+        const linked = await relayone.isLinked()
+
+        if (linked) {
+
+            login(relayone)
         }
 
     }
