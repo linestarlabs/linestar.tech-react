@@ -34,6 +34,8 @@ import ThinBarChart from "examples/Charts/BarCharts/ThinBarChart";
 import ControllerCard from "examples/Cards/ControllerCard";
 import PlaceholderCard from "examples/Cards/PlaceholderCard";
 
+import * as moment from 'moment'
+
 // SmartHome dashboard components
 import Cameras from "layouts/dashboards/smart-home/components/Cameras";
 import TemperatureSlider from "layouts/dashboards/smart-home/components/TemperatureSlider";
@@ -45,6 +47,12 @@ import controllerCardIcons from "layouts/dashboards/smart-home/data/controllerCa
 
 // Images
 import iconSunCloud from "assets/images/small-logos/icon-sun-cloud.png";
+import useDashboard from "hooks/useDashboard";
+
+import DataTable from "examples/Tables/DataTable";
+import Card from "@mui/material/Card";
+
+import useAPI from "hooks/useAPI"
 
 const relayxSignIn = async () => {
   const token = await relayone.authBeta();
@@ -120,7 +128,66 @@ function SmartHome() {
   const [lightsStata, setLightsStata] = useState(false);
   const [wifiState, setWifiState] = useState(true);
 
+  const { data, error, loading, refresh } = useDashboard('home-power')
+
+  const machineIdentifier = '1CfUeaF6yuv9LG8KLyRQa1n5YRDEiu2j2h'
+
+  const {
+    data: sensorData,
+    loading: sensorDataLoading,
+    error: sensorDataError } = useAPI(`/v1/machines/${machineIdentifier}/events`)
+
   window['relayxSignIn'] = relayxSignIn;
+
+
+  if (error) {
+    return <>Error</>
+  }
+
+
+  if (!data || loading) {
+    return <>Loading</>
+  }
+
+  const { dashboard } = data
+
+  console.log('dashboard data loaded', dashboard)
+
+  const dataTableData = {
+    columns: [
+      { Header: "timestamp", accessor: "timestamp", },
+
+      { Header: "HomeGrid-ChargingVoltage", accessor: "HomeGrid-ChargingVoltage", },
+      { Header: "HomeGrid-SoC", accessor: "HomeGrid-SoC",  },
+      { Header: "HomeGrid-SoH", accessor: "HomeGrid-SoH" },
+      { Header: "HomeGrid-SystemVoltage", accessor: "HomeGrid-SystemVoltage" },
+      { Header: "Blockchain Event", accessor: "txid" }
+    ],
+  
+    rows: []
+  }
+
+  console.log('sensorData', sensorData)
+
+  if (sensorData) {
+
+    dataTableData.rows = sensorData.events.map(event => {
+
+      if (event?.content?.set1) {
+
+        console.log('SET 1', event?.content?.set1)
+
+        return Object.assign(event.content.set1, {
+          timestamp: moment(event.content.timestamp * 1000).format(),
+          txid: event.txid
+        })
+      }
+    })
+    .filter(event => !!event)
+
+  }
+
+  const row = dataTableData.rows[0]
 
   return (
     <DashboardLayout>
@@ -132,56 +199,89 @@ function SmartHome() {
               <Cameras />
             </Grid>
             <Grid item xs={12} xl={5}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <WeatherCard
-                    title="weather today"
-                    weather={{ location: "Austin", degree: 29 }}
-                    icon={{ component: iconSunCloud, text: "cloudy" }}
-                  />
+              {sensorData && (
+                  <Grid container spacing={3}>
+
+                  <Grid item xs={12}>
+                    <WeatherCard
+                      title="weather today"
+                      weather={{ location: dashboard.city, degree: dashboard.weather_temperature }}
+                      icon={{ component: iconSunCloud, text: dashboard.weather }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <DefaultCounterCard
+                      count={row['HomeGrid-ChargingVoltage']}
+                      suffix={<></>}
+                      title="Charging Voltage"
+                      description="Home Grid"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <DefaultCounterCard
+                      count={row['HomeGrid-SystemVoltage']}
+                      suffix=""
+                      title="System Voltage"
+                      description="Home Grid"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <DefaultCounterCard
+                      count={row['HomeGrid-SoC']}
+                      suffix=""
+                      title="State of Charge"
+                      description="Home Grid"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <DefaultCounterCard
+                      count={row['HomeGrid-SoH']}
+                      suffix=""
+                      title="State of Health"
+                      description="Home Grid"
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                  <DefaultCounterCard
-                    count={21}
-                    suffix={<>&deg;C</>}
-                    title="Power Server"
-                    description="temperature"
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <DefaultCounterCard
-                    count={44}
-                    suffix="%"
-                    title="outside"
-                    description="humidity"
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <DefaultCounterCard
-                    count={87}
-                    suffix="kW"
-                    title="energy"
-                    description="consumption"
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <DefaultCounterCard
-                    count={417}
-                    suffix="kW"
-                    title="energy"
-                    description="production"
-                  />
-                </Grid>
-              </Grid>
+              )}
+
             </Grid>
           </Grid>
         </SoftBox>
         <SoftBox mb={3}>
+          <Card>
+            <SoftBox p={3} lineHeight={1}>
+              <SoftTypography variant="h5" fontWeight="medium">
+                Live Battery Data on Blockchain
+              </SoftTypography>
+              <SoftTypography variant="button" fontWeight="regular" color="text">
+                Historial device data is streamed to the blockchain in real time for permanent archival.
+              </SoftTypography>
+            </SoftBox>
+            {sensorData ? (
+              <DataTable table={dataTableData} />
+            ): (
+              <SoftBox>
+
+              <p>Loading Sensor Data</p>
+              </SoftBox>
+
+            )}
+            
+          </Card>
+        </SoftBox>
+  
+      </SoftBox>
+
+      <SoftBox my={6} width="100%">
+        <Divider />
+      </SoftBox>
+      {/* 
+      <SoftBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={6}>
               <ReportsDoughnutChart
                 title="Consumption by room"
-                count={{ number: 471.3, text: "whatts" }}
+                count={{ number: dashboard['consumption_by_room.watts'], text: "watts" }}
                 chart={reportsDoughnutChartData}
                 tooltip="See the consumption per room"
               />
@@ -192,13 +292,13 @@ function SmartHome() {
             <Grid item xs={12} sm={6} lg={3}>
               <TemperatureSlider
                 handle1={{
-                  value: temperature,
+                  value: dashboard.device_temperature,
                   onChange: (v) => setTemperature(Math.round(v)),
                 }}
                 title="Device limit"
                 current={
                   <>
-                    {temperature}
+                    {dashboard.device_temperature}
                     <SoftTypography component="span" variant="h4" color="text">
                       &deg;C
                     </SoftTypography>
@@ -213,15 +313,11 @@ function SmartHome() {
             </Grid>
           </Grid>
         </SoftBox>
-      </SoftBox>
-      <SoftBox my={6} width="100%">
-        <Divider />
-      </SoftBox>
       <SoftBox mb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} lg={2}>
             <ControllerCard
-              state={humidityState}
+              state={dashboard['switches.humidity']}
               icon={humidityState ? humidityIconLight : humidityIconDark}
               title="humidity"
               description="Inactive since: 2 days"
@@ -230,7 +326,7 @@ function SmartHome() {
           </Grid>
           <Grid item xs={12} sm={6} lg={2}>
             <ControllerCard
-              state={temperatureState}
+              state={dashboard['switches.temperature']}
               icon={temperatureIconLight}
               title="temperature"
               description="Active"
@@ -239,7 +335,7 @@ function SmartHome() {
           </Grid>
           <Grid item xs={12} sm={6} lg={2}>
             <ControllerCard
-              state={airConditionerState}
+              state={dashboard['switches.air_conditioner']}
               icon={airConditionerState ? airConditionerIconLight : airConditionerIconDark}
               title="air conditioner"
               description="Inactive since: 1 hour"
@@ -248,7 +344,7 @@ function SmartHome() {
           </Grid>
           <Grid item xs={12} sm={6} lg={2}>
             <ControllerCard
-              state={lightsStata}
+              state={dashboard['switches.lights']}
               icon={lightsStata ? lightsIconLight : lightsIconDark}
               title="lights"
               description="Inactive since: 27 min"
@@ -257,7 +353,7 @@ function SmartHome() {
           </Grid>
           <Grid item xs={12} sm={6} lg={2}>
             <ControllerCard
-              state={wifiState}
+              state={dashboard['switches.wifi']}
               icon={wifiState ? wifiIconLight : wifiIconDark}
               title="wi-fi"
               description="active"
@@ -269,6 +365,7 @@ function SmartHome() {
           </Grid>
         </Grid>
       </SoftBox>
+      */}
       <Footer />
     </DashboardLayout>
   );

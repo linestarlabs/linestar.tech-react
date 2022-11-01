@@ -105,7 +105,7 @@ const routes = [
     ],
   },
  
-  {
+  /*{
     type: "collapse",
     name: "Linestar Products",
     key: "products",
@@ -120,6 +120,7 @@ const routes = [
       },
     ],
   },
+  */
  
   { type: "divider", key: "divider-1" },
 

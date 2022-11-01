@@ -65,9 +65,9 @@ function reducer(state, action) {
 // Soft UI Dashboard PRO React context provider
 function SoftUIControllerProvider({ children }) {
   const initialState = {
-    miniSidenav: false,
+    miniSidenav: true,
     transparentSidenav: true,
-    sidenavColor: "info",
+    sidenavColor: "error",
     transparentNavbar: true,
     fixedNavbar: true,
     openConfigurator: false,

@@ -56,7 +56,9 @@ function Configurator() {
   const [disabled, setDisabled] = useState(false);
   const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
 
-  const { logout } = useAuth()
+  const { logout, user, restore } = useAuth()
+
+  console.log('USE AUTH', user)
 
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
@@ -74,6 +76,17 @@ function Configurator() {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleDisabled);
   }, []);
+
+
+  useEffect(() => {
+
+    if (relayone) {
+      restore(relayone)
+    }
+    
+
+  }, [])
+
 
   const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);
   const handleTransparentSidenav = () => setTransparentSidenav(dispatch, true);
@@ -140,90 +153,6 @@ function Configurator() {
       <Divider />
 
       <SoftBox pt={1.25} pb={3} px={3}>
-        <SoftBox>
-          <SoftTypography variant="h6">Sidenav Colors</SoftTypography>
-
-          <SoftBox mb={0.5}>
-            {sidenavColors.map((color) => (
-              <IconButton
-                key={color}
-                sx={({ borders: { borderWidth }, palette: { white, dark }, transitions }) => ({
-                  width: "24px",
-                  height: "24px",
-                  padding: 0,
-                  border: `${borderWidth[1]} solid ${white.main}`,
-                  borderColor: sidenavColor === color && dark.main,
-                  transition: transitions.create("border-color", {
-                    easing: transitions.easing.sharp,
-                    duration: transitions.duration.shorter,
-                  }),
-                  backgroundImage: ({ functions: { linearGradient }, palette: { gradients } }) =>
-                    linearGradient(gradients[color].main, gradients[color].state),
-
-                  "&:not(:last-child)": {
-                    mr: 1,
-                  },
-
-                  "&:hover, &:focus, &:active": {
-                    borderColor: dark.main,
-                  },
-                })}
-                onClick={() => setSidenavColor(dispatch, color)}
-              />
-            ))}
-          </SoftBox>
-        </SoftBox>
-
-        <SoftBox mt={3} lineHeight={1}>
-          <SoftTypography variant="h6">Sidenav Type</SoftTypography>
-          <SoftTypography variant="button" color="text" fontWeight="regular">
-            Choose between 2 different sidenav types.
-          </SoftTypography>
-
-          <SoftBox
-            sx={{
-              display: "flex",
-              mt: 2,
-            }}
-          >
-            <SoftButton
-              color="info"
-              variant={transparentSidenav ? "gradient" : "outlined"}
-              onClick={handleTransparentSidenav}
-              disabled={disabled}
-              fullWidth
-              sx={{
-                mr: 1,
-                ...sidenavTypeButtonsStyles,
-              }}
-            >
-              Transparent
-            </SoftButton>
-            <SoftButton
-              color="info"
-              variant={transparentSidenav ? "outlined" : "gradient"}
-              onClick={handleWhiteSidenav}
-              disabled={disabled}
-              fullWidth
-              sx={sidenavTypeButtonsStyles}
-            >
-              White
-            </SoftButton>
-          </SoftBox>
-        </SoftBox>
-        <SoftBox mt={3} mb={2} lineHeight={1}>
-          <SoftTypography variant="h6">Navbar Fixed</SoftTypography>
-
-          <Switch checked={fixedNavbar} onChange={handleFixedNavbar} />
-        </SoftBox>
-
-        <Divider />
-
-        <SoftBox mt={2} mb={3} lineHeight={1}>
-          <SoftTypography variant="h6">Sidenav Mini</SoftTypography>
-
-          <Switch checked={miniSidenav} onChange={handleMiniSidenav} />
-        </SoftBox>
 
         <Divider />
 
@@ -241,15 +170,18 @@ function Configurator() {
               buy now
             </SoftButton>
           </SoftBox>
+          {user && (
           <SoftButton
-            component={Link}
-            color="dark"
-            variant="outlined"
-            fullWidth
-            onClick={signOut}
-          >
-            Sign Out
-          </SoftButton>
+          component={Link}
+          color="dark"
+          variant="outlined"
+          fullWidth
+          onClick={signOut}
+        >
+          Sign Out
+        </SoftButton>
+          )}
+
         </SoftBox>
       </SoftBox>
     </ConfiguratorRoot>
