@@ -160,7 +160,7 @@ function Configurator() {
           <SoftBox mb={2}>
             <SoftButton
               component={Link}
-              href="https://material-ui.com/store/items/soft-ui-pro-dashboard/"
+              href="/products/blockchain"
               target="_blank"
               rel="noreferrer"
               color="info"

@@ -66,6 +66,7 @@ import Overview from "layouts/ecommerce/overview";
 import NewProduct from "layouts/ecommerce/products/new-product";
 import EditProduct from "layouts/ecommerce/products/edit-product";
 import ProductPage from "layouts/ecommerce/products/product-page";
+import ProductPageBlockchain from "layouts/ecommerce/products/product-page-blockchain";
 import ProductsList from "layouts/ecommerce/products/products-list";
 import OrderList from "layouts/ecommerce/orders/order-list";
 import OrderDetails from "layouts/ecommerce/orders/order-details";
@@ -104,7 +105,23 @@ const routes = [
       },
     ],
   },
- 
+  
+  {
+    type: "collapse",
+    name: "Blockchain Data Service",
+    key: "products",
+    icon: <Office size="12px" />,
+
+    collapse: [
+      {
+        name: "Blockchain Data Acquisition and Storage",
+        key: "product-page",
+        route: "/products/blockchain",
+        component: <ProductPageBlockchain />,
+      },
+    ],
+  },
+
   /*{
     type: "collapse",
     name: "Linestar Products",
